@@ -14,46 +14,15 @@ async function callGoogleVision(fileName:string){
 
     const [result] = await client.documentTextDetection(fileName);
     const fullTextAnnotation = result.fullTextAnnotation;
-    /*
-    console.log(`Full text: ${fullTextAnnotation.text}`);
-    fullTextAnnotation.pages.forEach(page => {
-        page.blocks.forEach(block => {
-            console.log(`Block confidence: ${block.confidence}`);
-            block.paragraphs.forEach(paragraph => {
-                console.log(`Paragraph confidence: ${paragraph.confidence}`);
-                paragraph.words.forEach(word => {
-                    const wordText = word.symbols.map(s => s.text).join('');
-                    console.log(`Word text: ${wordText}`);
-                    console.log(`Word confidence: ${word.confidence}`);
-                    word.symbols.forEach(symbol => {
-                        console.log(`Symbol text: ${symbol.text}`);
-                        console.log(`Symbol confidence: ${symbol.confidence}`);
-                    });
-                });
-            });
-        });
-    });*/
-
-    //const doc = new Document
-    /*
-    fullTextAnnotation.pages.forEach(page => {
-        page.blocks.forEach(block => {
-            block.paragraphs.forEach(paragraph => {
-                paragraph.words.forEach(word => {
-                    word.symbols.forEach(symbol => {
-                        console.log(symbol.text);
-                    });
-                });
-            });
-        });
-    });
-    */
-
     return fullTextAnnotation.text;
 }
+
+//Generates a .docx document from a list of images. 
 async function generateDocument(images: string[]){
+
     const doc = new Document();
 
+    //Loops through each image, adding it to the document
     for (let image of images){
         await callGoogleVision(image).then(res => {
             console.log(res + "\n\n");
@@ -71,10 +40,16 @@ async function generateDocument(images: string[]){
     });
 }
 
-
-const testImageArray = [
-    resolve(__dirname, "../../ImageInput/", "Rafeha_Letter.png"),
-    resolve(__dirname, "../../ImageInput/", "testrabbit.jpg")
+const imageNameArray = [
+    "Pg1.jpg",
+    "Pg2.jpg",
+    "Pg3.jpg"
 ];
+
+const testImageArray = [];
+
+for (let image of imageNameArray){
+    testImageArray.push(resolve(__dirname, "../../ImageInput/",image));
+}
 
 generateDocument(testImageArray);
