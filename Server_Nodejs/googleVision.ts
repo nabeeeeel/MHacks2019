@@ -1,9 +1,8 @@
 import { resolve } from 'path';
+import { Document, Packer, Paragraph } from 'docx';
+import * as filestream from 'fs';
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS = "/Users/brehm/MHacks2019/serviceaccount.json";
-
-const picname = "testrabbit.jpg";
-const testfilepath = resolve(__dirname, "../../", picname);
+process.env.GOOGLE_APPLICATION_CREDENTIALS = resolve(__dirname, "../../", "serviceaccount.json") //"/Users/brehm/MHacks2019/serviceaccount.json";
 
 const vision = require('@google-cloud/vision');
 
@@ -35,9 +34,47 @@ async function callGoogleVision(fileName: string) {
         });
     });*/
 
+    //const doc = new Document
+    /*
+    fullTextAnnotation.pages.forEach(page => {
+        page.blocks.forEach(block => {
+            block.paragraphs.forEach(paragraph => {
+                paragraph.words.forEach(word => {
+                    word.symbols.forEach(symbol => {
+                        console.log(symbol.text);
+                    });
+                });
+            });
+        });
+    });
+    */
+
     return fullTextAnnotation.text;
 }
+async function generateDocument(images: string[]) {
+    const doc = new Document();
 
-callGoogleVision(testfilepath).then(res => {
-    console.log(res);
-});
+    for (let image of images) {
+        await callGoogleVision(image).then(res => {
+            console.log(res + "\n\n");
+
+            const paragraph = new Paragraph(res);
+            doc.addSection({
+                properties: {},
+                children: [paragraph]
+            });
+        });
+    }
+
+    Packer.toBuffer(doc).then((buffer) => {
+        filestream.writeFileSync("../../DocumentOutput/Document.docx", buffer);
+    });
+}
+
+
+const testImageArray = [
+    resolve(__dirname, "../../ImageInput/", "Rafeha_Letter.png"),
+    resolve(__dirname, "../../ImageInput/", "testrabbit.jpg")
+];
+
+generateDocument(testImageArray);
