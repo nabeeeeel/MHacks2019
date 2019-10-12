@@ -1,28 +1,17 @@
-import { createSocket } from 'dgram';
-import { AddressInfo } from 'net';
+const express = require('express');
+const bodyParser = require('body-parser');
 
-const server = createSocket('udp4');
+const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 
-server.on('error', err => {
-    console.error("SERVER: Error, ", err.stack);
+app.post('/', (req, res) => {
+    console.log(req);
+    console.log(req.body);
+    res.send("Welcome!")
 });
 
-server.on('message', (msg, rinfo) => {
-    console.log(`SERVER: got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-
-    // Do Stuff with Data
-
-    // Respond back
-    const msgBuffer = Buffer.from("Hi from Server!");
-    server.send(msgBuffer, rinfo.port, rinfo.address, err => {
-        if (err) console.error("SERVER: Error Occured ", err.stack);
-    })
-});
-
-server.on('listening', () => {
-    const address = server.address() as AddressInfo;
-    console.log(`SERVER: listening ${address.address}:${address.port}`);
-});
-
-server.bind(6969);
+app.listen(6969, () => {
+    console.log("Listening to 'localhost:6969'");
+})
