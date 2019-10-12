@@ -1,5 +1,4 @@
-import {google} from 'googleapis';
-import {resolve} from 'path';
+import { resolve } from 'path';
 
 process.env.GOOGLE_APPLICATION_CREDENTIALS = "/Users/brehm/MHacks2019/serviceaccount.json";
 
@@ -12,7 +11,7 @@ const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient();
 
 //Finds text in an image
-async function callGoogleVision(fileName:string){
+async function callGoogleVision(fileName: string) {
 
     const [result] = await client.documentTextDetection(fileName);
     const fullTextAnnotation = result.fullTextAnnotation;
@@ -35,8 +34,8 @@ async function callGoogleVision(fileName:string){
             });
         });
     });*/
-    
-   return fullTextAnnotation.text;
+
+    return fullTextAnnotation.text;
 }
 
 callGoogleVision(testfilepath).then(res => {
