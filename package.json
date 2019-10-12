@@ -1,0 +1,26 @@
+{
+  "name": "mhacks_2019",
+  "version": "1.0.0",
+  "description": "A project created by Nabeel Ahmed, Omar Omar, Kevin Brehm, and Zaki, in order to create an Android app capable of turning written text to typed text.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm ./Server_Nodejs/out/*",
+    "start-server": "node ./Server_Nodejs/out/server.js",
+    "start-client": "node ./Server_Nodejs/out/client.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nabeeeeel/MHacks2019.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nabeeeeel/MHacks2019/issues"
+  },
+  "homepage": "https://github.com/nabeeeeel/MHacks2019#readme",
+  "dependencies": {
+    "@types/node": "^12.7.12"
+  }
+}
