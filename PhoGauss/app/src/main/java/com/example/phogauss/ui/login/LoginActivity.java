@@ -1,53 +1,29 @@
 package com.example.phogauss.ui.login;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.example.phogauss.R;
+import com.example.phogauss.main.MainActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.tasks.Task;
-import com.google.api.client.auth.oauth2.Credential;
-import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
-import com.google.api.client.extensions.jetty.auth.oauth2.LocalServerReceiver;
-import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.client.util.store.FileDataStoreFactory;
-import com.google.api.services.docs.v1.Docs;
-import com.google.api.services.docs.v1.DocsScopes;
-import com.google.api.services.docs.v1.model.Document;
 
 public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     GoogleSignInClient mGoogleSignInClient ;
     SignInButton signInButton;
-
+    Intent intent;
 
     @Override
     public void onStart() {
@@ -62,11 +38,16 @@ public class LoginActivity extends AppCompatActivity {
         if (signedIn != null) {
             // sigin is successfull
             signInButton.setVisibility(View.GONE);
-            //Intent intent = new Intent(this, MainActivity.class);
+           startNext();
         } else {
             // sigin is cancelled
             signInButton.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void startNext() {
+        intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -80,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
             signInButton.setVisibility(View.GONE);
+            startNext();
         }
     }
 
