@@ -95,7 +95,7 @@ app.use(myParser.json({extended : true}));
         let encodedDocument = encodeDocument();
         console.log("Document encoded...");
 
-        response.json(encodedDocument);
+        response.json({document: encodedDocument});
 
 });
  
