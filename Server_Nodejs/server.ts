@@ -91,4 +91,6 @@ app.use(myParser.json({extended : true}));
 });
  
  //Start the server and make it listen for connections on port 8080
-  app.listen(port);
+  app.listen(port, () => {
+      console.log(`We doing in real at port ${port} up in here!`);
+  });

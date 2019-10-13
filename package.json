@@ -8,7 +8,8 @@
     "watch": "tsc --watch",
     "clean": "rm ./Server_Nodejs/out/*",
     "start-server": "node ./Server_Nodejs/out/server.js",
-    "start-client": "node ./Server_Nodejs/out/client.js"
+    "start-client": "node ./Server_Nodejs/out/client.js",
+    "start": "node ./Server_Nodejs/out/server.js"
   },
   "repository": {
     "type": "git",
