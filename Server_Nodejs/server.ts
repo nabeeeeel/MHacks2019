@@ -59,7 +59,7 @@ function decodeRequest(request){
     let nameArray = [];
     let count = 1
 
-    for (let datum of request){
+    for (let datum of request.body){
         let buff = new Buffer(datum, 'base64');
         fs.writeFileSync(`../../ImageInput/Image${count}.jpg`,buff );
         nameArray.push(`Image${count}.jpg`);
