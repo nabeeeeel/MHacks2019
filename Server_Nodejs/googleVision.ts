@@ -16,21 +16,10 @@ async function callGoogleVision(fileName: string) {
     const fullTextAnnotation = result.fullTextAnnotation;
     return fullTextAnnotation.text;
 }
-<<<<<<< HEAD
-
-//Generates a .docx document from a list of images. 
-async function generateDocument(images: string[]){
-
-    const doc = new Document();
-
-    //Loops through each image, adding it to the document
-    for (let image of images){
-=======
 async function generateDocument(images: string[]) {
     const doc = new Document();
 
     for (let image of images) {
->>>>>>> 1b2619c3d6182c5ee136b134b8984a26089e8514
         await callGoogleVision(image).then(res => {
             console.log(res + "\n\n");
 
@@ -52,6 +41,7 @@ const imageNameArray = [
     "Pg2.jpg",
     "Pg3.jpg"
 ];
+
 
 const testImageArray = [];
 
