@@ -77,17 +77,25 @@ function encodeDocument(){
 
 app.use(myParser.json({extended : true}));
    app.post("/convert", function(request, response) {
-       console.log("Valid input recived.");
-       console.log(request.body); //This prints the JSON document received (if it is a JSON document)
+        console.log("Valid input recived.");
+        console.log(request.body); //This prints the JSON document received (if it is a JSON document)
         
-       //Decode the Request
+        //Decode the Request
         let nameArray = decodeRequest(request);
+        console.log("Images decoded successfully...");
+        for (let image of nameArray){
+            console.log(`\t${image}`);
+        }
 
-       //Convert the Files
+        //Convert the Files
         generateDocument(nameArray);
+        console.log("Document generated...");
 
-       //Encode the responce
-       response.json(encodeDocument());
+        //Encode the responce
+        let encodedDocument = encodeDocument();
+        console.log("Document encoded...");
+
+        response.json(encodedDocument);
 
 });
  
