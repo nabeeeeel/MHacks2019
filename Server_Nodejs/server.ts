@@ -25,7 +25,7 @@ process.env.GOOGLE_APPLICATION_CREDENTIALS = resolve(__dirname, "../../", "servi
 const express = require('express');
 const myParser = require('body-parser');
 const app = express();
-const port = 6969;
+const port = 8080;
 const vision = require('@google-cloud/vision');
 const client = new vision.ImageAnnotatorClient();
 
@@ -75,31 +75,34 @@ function encodeDocument(){
     return base64data;
 }
 
-app.use(myParser.json({extended : true}));
-   app.post("/convert", function(request, response) {
-        console.log("Valid input recived.");
-        console.log(request.body); //This prints the JSON document received (if it is a JSON document)
+app.use(myParser.json({limt: '50mb', extended : true}));
+app.get('/', (req, res) => res.send('Hello World!'));
+app.post("/convert", function(request, response) {
+    console.log("Valid input recived.");
+    console.log(request.body); //This prints the JSON document received (if it is a JSON document)
         
-        //Decode the Request
-        let nameArray = decodeRequest(request);
-        console.log("Images decoded successfully...");
-        for (let image of nameArray){
-            console.log(`\t${image}`);
-        }
+    //Decode the Request
+    let nameArray = decodeRequest(request);
+    console.log("Images decoded successfully...");
+    for (let image of nameArray){
+        console.log(`\t${image}`);
+    }
 
-        //Convert the Files
-        generateDocument(nameArray);
-        console.log("Document generated...");
+    //Convert the Files
+    generateDocument(nameArray);
+    console.log("Document generated...");
 
-        //Encode the responce
-        let encodedDocument = encodeDocument();
-        console.log("Document encoded...");
+    //Encode the responce
+    let encodedDocument = encodeDocument();
+    console.log("Document encoded...");
 
-        response.json({document: encodedDocument});
+    response.json({document: encodedDocument});
 
 });
  
- //Start the server and make it listen for connections on port 8080
-  app.listen(port, () => {
-      console.log(`SERVER UP: port ${port}`);
-  });
+//Start the server and make it listen for connections on port 8080
+const server = app.listen(port, () => {
+    const host = server.address().address;
+
+    console.log(`Server listening at http://${host}:${port}`);
+});

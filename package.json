@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A project created by Nabeel Ahmed, Omar Omar, Kevin Brehm, and Zaki, in order to create an Android app capable of turning written text to typed text.",
   "main": "index.js",
+  "engines": {
+    "node": "10.16.3"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
