@@ -77,6 +77,7 @@ function encodeDocument(){
 
 app.use(myParser.json({extended : true}));
    app.post("/convert", function(request, response) {
+       console.log("Valid input recived.");
        console.log(request.body); //This prints the JSON document received (if it is a JSON document)
         
        //Decode the Request
@@ -92,5 +93,5 @@ app.use(myParser.json({extended : true}));
  
  //Start the server and make it listen for connections on port 8080
   app.listen(port, () => {
-      console.log(`We doing in real at port ${port} up in here!`);
+      console.log(`SERVER UP: port ${port}`);
   });

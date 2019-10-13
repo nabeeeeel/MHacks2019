@@ -1,2 +1,0 @@
-import {resolve} from 'path';
-
